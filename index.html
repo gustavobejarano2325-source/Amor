@@ -6,271 +6,223 @@
     <title>Para ti, mi amor ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        /* --- Estilos Generales --- */
         body {
-            height: 100vh;
+            margin: 0;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            /* Fondo con degradado animado Premium */
-            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #f6416c, #ffb199);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            /* Fondo degradado suave */
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
             font-family: 'Playfair Display', serif;
             overflow: hidden;
-            perspective: 1000px; /* Para el efecto 3D del sobre */
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Contenedor del sobre */
-        .envelope-wrapper {
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 90%;
+            width: 400px;
             position: relative;
-            width: 320px;
-            height: 200px;
-            cursor: pointer;
-            transition: transform 0.4s ease;
-        }
-        
-        .envelope-wrapper:hover {
-            transform: translateY(-5px);
+            z-index: 10;
+            transition: all 0.5s ease;
         }
 
-        .envelope {
-            position: absolute;
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #d63384;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff4d6d, #ff8fa3);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+            transition: transform 0.2s;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Clases para ocultar/mostrar contenido */
+        .hidden {
+            display: none;
+        }
+
+        .fade-in {
+            animation: fadeIn 1.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Animación de la Rosa CSS (¡Sin imágenes!) --- */
+        .flower-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px; /* Centrado */
+        }
+
+        .flower {
+            position: relative;
             width: 100%;
             height: 100%;
-            background: #d63384;
-            border-radius: 10px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            z-index: 3;
+            animation: bloom 2s ease-out forwards; /* Animación de florecer */
         }
 
-        /* La solapa que se abre */
-        .flap {
+        /* Pétalos centrales */
+        .flower::after {
+            content: '';
             position: absolute;
+            left: 50%;
             top: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 160px solid transparent;
-            border-right: 160px solid transparent;
-            border-top: 110px solid #ff4d6d;
-            transform-origin: top;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 5;
+            width: 60px;
+            height: 60px;
+            background: #ff4d6d;
+            border-radius: 50% 50% 0 50%;
+            transform: translateX(-50%) rotate(45deg);
+            box-shadow: -5px 5px 15px rgba(0,0,0,0.1) inset;
         }
 
-        /* Parte frontal del sobre (bolsillo) */
-        .pocket {
+        /* Pétalos exteriores */
+        .flower::before {
+            content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 160px solid #e63946;
-            border-right: 160px solid #e63946;
-            border-bottom: 110px solid #c1121f;
-            border-top: 90px solid transparent;
-            z-index: 4;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
+            left: 50%;
+            top: 10px;
+            width: 70px;
+            height: 70px;
+            background: #ff8fa3;
+            border-radius: 50% 50% 0 50%;
+            transform: translateX(-50%) rotate(45deg);
+            z-index: -1;
+            opacity: 0.8;
         }
 
-        /* La Carta */
-        .letter {
+        /* Tallo y hojas */
+        .stem {
             position: absolute;
-            bottom: 10px;
-            left: 10px;
-            right: 10px;
-            background: #fffafa;
-            border-radius: 8px;
-            padding: 25px 20px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            z-index: 2;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            height: 180px;
-            overflow: hidden;
+            top: 90%;
+            left: 50%;
+            width: 4px;
+            height: 60px;
+            background: #55a630;
+            transform: translateX(-50%);
+            z-index: -2;
+            border-radius: 2px;
         }
 
-        /* Animaciones al hacer clic */
-        .open .flap {
-            transform: rotateX(180deg);
-            z-index: 1; /* Pasa detrás de la carta */
-        }
-
-        .open .letter {
-            transform: translateY(-120px) scale(1.1);
-            height: 480px;
-            z-index: 6; /* Pasa al frente */
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-        }
-
-        /* Estilos del texto */
-        .title {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.5rem;
-            color: #d63384;
-            margin-bottom: 15px;
-            opacity: 0;
-            transition: opacity 1s 0.8s; /* Aparece después de que sube la carta */
-        }
-
-        .open .title {
-            opacity: 1;
-        }
-
-        .text-content {
-            font-size: 1.1rem;
-            color: #444;
-            line-height: 1.6;
-            text-align: justify;
-            min-height: 150px;
-        }
-
-        /* Rosa Pro Animada */
-        .rose-container {
-            margin-top: 20px;
-            opacity: 0;
-            transform: scale(0.5);
-            transition: all 1.5s ease-out;
-            filter: drop-shadow(0 0 10px rgba(255, 77, 109, 0.5));
-        }
-
-        .show-rose .rose-container {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .rose-img {
-            width: 100px;
-            height: auto;
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        /* Texto de ayuda inicial */
-        .hint {
+        .leaf {
             position: absolute;
-            width: 100%;
-            text-align: center;
-            bottom: -40px;
-            color: white;
-            font-weight: bold;
-            font-family: sans-serif;
-            letter-spacing: 1px;
-            animation: pulse 1.5s infinite;
+            top: 110%;
+            width: 30px;
+            height: 15px;
+            background: #55a630;
+            border-radius: 0 50% 50% 0;
+            z-index: -2;
         }
 
-        @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
+        .leaf-1 { left: 50%; transform: rotate(-30deg); }
+        .leaf-2 { right: 50%; transform: rotate(210deg); border-radius: 50% 0 0 50%; }
+
+
+        @keyframes bloom {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         /* Corazones flotantes */
         .floating-heart {
             position: absolute;
-            color: rgba(255, 255, 255, 0.6);
-            pointer-events: none;
-            z-index: 0;
-            animation: floatUp linear infinite;
+            color: #ff4d6d;
+            animation: floatUp linear forwards;
+            z-index: 1;
         }
 
         @keyframes floatUp {
-            from { transform: translateY(100vh) scale(0.5); opacity: 1; }
-            to { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+            to { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="envelope-wrapper" id="envelope" onclick="openEnvelope()">
-        <div class="envelope"></div>
-        <div class="flap"></div>
-        <div class="pocket"></div>
-        
-        <div class="letter" id="letter">
-            <h1 class="title">Mi Amor...</h1>
-            <div class="text-content" id="typed-text"></div>
-            
-            <div class="rose-container" id="rose">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Rose_ingekleurd.png/600px-Rose_ingekleurd.png" alt="Rosa" class="rose-img">
+    <div class="card">
+        <div id="cover">
+            <h1>¡Sorpresa para ti! ❤️</h1>
+            <p>Tengo un mensaje muy especial guardado aquí...</p>
+            <button class="btn" onclick="openGift()">Abrir mi regalo</button>
+        </div>
+
+        <div id="content" class="hidden">
+            <h1>Mi Amor...</h1>
+            <p>
+                Eres la casualidad más bonita que llegó a mi vida. Como esta rosa, mi amor por ti florece cada día más fuerte y hermoso. Gracias por ser mi inspiración y mi felicidad. ¡Te amo con todo mi corazón!
+            </p>
+            <div class="flower-container">
+                <div class="flower">
+                    <div class="stem"></div>
+                    <div class="leaf leaf-1"></div>
+                    <div class="leaf leaf-2"></div>
+                </div>
             </div>
         </div>
-        
-        <div class="hint" id="hint-text">Toca el sobre para abrir 💌</div>
     </div>
 
     <script>
-        const message = "Eres la casualidad más hermosa que me ha pasado. Cada día a tu lado es un regalo, y quería enviarte esta rosa para recordarte que mi amor por ti crece y florece a cada instante. Te amo con locura.";
-        let i = 0;
-        let isOpened = false;
-
-        function openEnvelope() {
-            if (isOpened) return; // Evita que se active dos veces
-            isOpened = true;
-
-            const envelope = document.getElementById('envelope');
-            const hint = document.getElementById('hint-text');
-            const rose = document.getElementById('rose');
+        function openGift() {
+            // 1. Ocultar la portada
+            document.getElementById('cover').style.display = 'none';
             
-            // Abre el sobre
-            envelope.classList.add('open');
-            hint.style.display = 'none'; // Oculta el texto de ayuda
+            // 2. Mostrar el contenido con una animación suave
+            const content = document.getElementById('content');
+            content.classList.remove('hidden');
+            content.classList.add('fade-in');
 
-            // Inicia la máquina de escribir después de que la carta suba (1 segundo)
-            setTimeout(typeWriter, 1000);
-            
-            // Muestra la rosa unos segundos después de que empiece a escribir
-            setTimeout(() => {
-                envelope.classList.add('show-rose');
-            }, 3500);
-
-            // Explosión de corazones de fondo
-            for(let j = 0; j < 20; j++) {
-                setTimeout(createHeart, j * 150);
+            // 3. Lanzar corazones flotantes
+            for (let i = 0; i < 30; i++) {
+                createHeart();
             }
         }
 
-        // Efecto de escribir letra por letra
-        function typeWriter() {
-            if (i < message.length) {
-                document.getElementById("typed-text").innerHTML += message.charAt(i);
-                i++;
-                setTimeout(typeWriter, 40); // Velocidad de escritura (40ms)
-            }
-        }
-
-        // Crear corazones flotantes en el fondo
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('floating-heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = '100%';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 6000);
+            
+            // Eliminar el corazón después de la animación para no saturar
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
         }
-
-        // Crear corazones aleatorios constantemente
-        setInterval(createHeart, 500);
     </script>
+
 </body>
 </html>
