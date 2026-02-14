@@ -14,7 +14,7 @@
             align-items: center;
             justify-content: center;
             /* Fondo degradado suave */
-            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+            background: linear-gradient(135deg, #fff5f8 0%, #fcede8 100%);
             font-family: 'Playfair Display', serif;
             overflow: hidden;
         }
@@ -22,27 +22,29 @@
         .card {
             background: rgba(255, 255, 255, 0.95);
             padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(255, 77, 109, 0.15);
             text-align: center;
             max-width: 90%;
-            width: 400px;
+            width: 420px;
             position: relative;
             z-index: 10;
             transition: all 0.5s ease;
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
         h1 {
             font-family: 'Dancing Script', cursive;
             color: #d63384;
-            font-size: 2.8rem;
-            margin-bottom: 20px;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
         p {
-            color: #555;
-            font-size: 1.1rem;
-            line-height: 1.6;
+            color: #666;
+            font-size: 1.15rem;
+            line-height: 1.7;
             margin-bottom: 30px;
         }
 
@@ -50,109 +52,136 @@
             background: linear-gradient(45deg, #ff4d6d, #ff8fa3);
             border: none;
             color: white;
-            padding: 15px 30px;
-            font-size: 1.2rem;
+            padding: 16px 35px;
+            font-size: 1.3rem;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
-            transition: transform 0.2s;
-            font-family: 'Playfair Display', serif;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+            transition: all 0.3s ease;
+            font-family: 'Dancing Script', cursive;
         }
 
         .btn:hover {
-            transform: scale(1.05);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(255, 77, 109, 0.5);
         }
 
         /* Clases para ocultar/mostrar contenido */
-        .hidden {
-            display: none;
-        }
+        .hidden { display: none; }
 
         .fade-in {
-            animation: fadeIn 1.5s ease forwards;
+            animation: fadeInContent 1.2s ease forwards;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes fadeInContent {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- Animación de la Rosa CSS (¡Sin imágenes!) --- */
+        /* =========================================
+           NUEVA ROSA CSS MEJORADA (Capas y Realismo)
+           ========================================= */
         .flower-container {
             position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px; /* Centrado */
+            width: 120px;
+            height: 160px; /* Más altura para el tallo */
+            margin: 10px auto 0;
+            perspective: 1000px;
         }
 
-        .flower {
+        /* Cabeza de la rosa (donde están los pétalos) */
+        .rose-head {
             position: relative;
+            width: 80px;
+            height: 80px;
+            left: 20px; /* Centrar respecto al tallo */
+            transform-style: preserve-3d;
+            animation: bloom-rose 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+        }
+
+        /* Capas de pétalos */
+        .petal-layer {
+            position: absolute;
             width: 100%;
             height: 100%;
-            animation: bloom 2s ease-out forwards; /* Animación de florecer */
-        }
-
-        /* Pétalos centrales */
-        .flower::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            width: 60px;
-            height: 60px;
-            background: #ff4d6d;
             border-radius: 50% 50% 0 50%;
-            transform: translateX(-50%) rotate(45deg);
-            box-shadow: -5px 5px 15px rgba(0,0,0,0.1) inset;
+            transform-origin: bottom center;
         }
 
-        /* Pétalos exteriores */
-        .flower::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 10px;
-            width: 70px;
-            height: 70px;
-            background: #ff8fa3;
-            border-radius: 50% 50% 0 50%;
-            transform: translateX(-50%) rotate(45deg);
-            z-index: -1;
-            opacity: 0.8;
+        /* Capa Exterior (Más clara y abierta) */
+        .layer-1 {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            transform: rotate(45deg) scale(1.1);
+            box-shadow: inset 5px 5px 20px rgba(255,255,255,0.5);
+        }
+        .layer-1::after { /* Pétalo opuesto */
+            content: ''; position: absolute; width: 100%; height: 100%;
+            background: inherit; border-radius: inherit;
+            transform: rotate(90deg); box-shadow: inherit;
         }
 
-        /* Tallo y hojas */
-        .stem {
+        /* Capa Media (Color principal) */
+        .layer-2 {
+            background: linear-gradient(45deg, #ff4d6d, #ff758c);
+            transform: rotate(20deg) scale(0.8);
+            top: 5px; left: 5px; width: 70px; height: 70px;
+            box-shadow: inset -5px -5px 15px rgba(168, 27, 60, 0.2);
+        }
+        .layer-2::after {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            background: inherit; border-radius: inherit;
+            transform: rotate(80deg);
+        }
+
+        /* Capa Central (Capullo oscuro) */
+        .layer-3 {
+            background: #d63384;
+            transform: rotate(0deg) scale(0.5);
+            top: 15px; left: 15px; width: 50px; height: 50px;
+            border-radius: 50%;
+            box-shadow: inset -5px 5px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Animación de florecer en espiral */
+        @keyframes bloom-rose {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            60% { transform: scale(1.1) rotate(10deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* Tallo y Hojas mejorados */
+        .stem-container {
             position: absolute;
-            top: 90%;
-            left: 50%;
-            width: 4px;
-            height: 60px;
-            background: #55a630;
+            top: 70px; left: 50%;
             transform: translateX(-50%);
-            z-index: -2;
-            border-radius: 2px;
+            z-index: -1;
+            opacity: 0;
+            animation: grow-stem 1s 0.5s ease forwards; /* Aparece después de la flor */
+        }
+        
+        @keyframes grow-stem {
+            from { height: 0; opacity: 0; }
+            to { height: 80px; opacity: 1; }
+        }
+
+        .stem {
+            width: 6px;
+            height: 80px;
+            background: linear-gradient(to right, #55a630, #2b7a0b);
+            border-radius: 4px;
         }
 
         .leaf {
             position: absolute;
-            top: 110%;
-            width: 30px;
-            height: 15px;
-            background: #55a630;
+            background: linear-gradient(45deg, #55a630, #80b918);
+            width: 35px; height: 20px;
             border-radius: 0 50% 50% 0;
-            z-index: -2;
+            box-shadow: inset 2px 2px 5px rgba(255,255,255,0.2);
         }
+        .leaf.one { top: 20px; left: 6px; transform: rotate(-25deg); }
+        .leaf.two { top: 40px; right: 6px; transform: rotate(205deg) scaleX(-1); }
 
-        .leaf-1 { left: 50%; transform: rotate(-30deg); }
-        .leaf-2 { right: 50%; transform: rotate(210deg); border-radius: 50% 0 0 50%; }
-
-
-        @keyframes bloom {
-            0% { transform: scale(0); opacity: 0; }
-            60% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); opacity: 1; }
-        }
 
         /* Corazones flotantes */
         .floating-heart {
@@ -160,10 +189,10 @@
             color: #ff4d6d;
             animation: floatUp linear forwards;
             z-index: 1;
+            text-shadow: 0 0 5px rgba(255, 77, 109, 0.5);
         }
-
         @keyframes floatUp {
-            to { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+            to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
@@ -171,56 +200,58 @@
 
     <div class="card">
         <div id="cover">
-            <h1>¡Sorpresa para ti! ❤️</h1>
-            <p>Tengo un mensaje muy especial guardado aquí...</p>
-            <button class="btn" onclick="openGift()">Abrir mi regalo</button>
+            <h1>¡Una sorpresa para ti!</h1>
+            <p style="font-size: 1.3rem;">Toca el botón para descubrir un mensaje especial... ❤️</p>
+            <button class="btn" onclick="openGift()">Ver mi regalo</button>
         </div>
 
         <div id="content" class="hidden">
             <h1>Mi Amor...</h1>
             <p>
-                Eres la casualidad más bonita que llegó a mi vida. Como esta rosa, mi amor por ti florece cada día más fuerte y hermoso. Gracias por ser mi inspiración y mi felicidad. ¡Te amo con todo mi corazón!
+                Como esta rosa, mi cariño por ti crece, florece y se vuelve más hermoso con cada día que compartimos. Eres el regalo más bonito de mi vida.
+                <br><b>¡Te amo infinitamente!</b>
             </p>
+            
             <div class="flower-container">
-                <div class="flower">
+                <div class="rose-head">
+                    <div class="petal-layer layer-1"></div>
+                    <div class="petal-layer layer-2"></div>
+                    <div class="petal-layer layer-3"></div>
+                </div>
+                <div class="stem-container">
                     <div class="stem"></div>
-                    <div class="leaf leaf-1"></div>
-                    <div class="leaf leaf-2"></div>
+                    <div class="leaf one"></div>
+                    <div class="leaf two"></div>
                 </div>
             </div>
+
         </div>
     </div>
 
     <script>
         function openGift() {
-            // 1. Ocultar la portada
             document.getElementById('cover').style.display = 'none';
-            
-            // 2. Mostrar el contenido con una animación suave
             const content = document.getElementById('content');
             content.classList.remove('hidden');
             content.classList.add('fade-in');
 
-            // 3. Lanzar corazones flotantes
-            for (let i = 0; i < 30; i++) {
-                createHeart();
+            // Lluvia de corazones más intensa
+            for (let i = 0; i < 35; i++) {
+                setTimeout(createHeart, i * 100);
             }
         }
 
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('floating-heart');
-            heart.innerHTML = '❤';
+            const emojis = ['❤️', '💖', '🌹', '✨'];
+            heart.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
             heart.style.left = Math.random() * 100 + '%';
-            heart.style.top = '100%';
-            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            heart.style.top = '110%';
+            heart.style.fontSize = (Math.random() * 25 + 15) + 'px';
+            heart.style.animationDuration = (Math.random() * 4 + 3) + 's';
             document.body.appendChild(heart);
-            
-            // Eliminar el corazón después de la animación para no saturar
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
+            setTimeout(() => { heart.remove(); }, 7000);
         }
     </script>
 
