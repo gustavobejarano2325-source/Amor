@@ -3,178 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para mi flor más bonita ❤️</title>
+    <title>Para ti, mi amor ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
+        }
+
+        body {
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #ffeef2; /* Rosa pastel muy suave */
-            font-family: 'Georgia', serif; /* Fuente más clásica */
+            /* Fondo con degradado animado Premium */
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #f6416c, #ffb199);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Playfair Display', serif;
             overflow: hidden;
-            text-align: center;
+            perspective: 1000px; /* Para el efecto 3D del sobre */
         }
 
-        /* Corazones flotantes de fondo */
-        .heart {
-            position: absolute;
-            color: #ff6f8f; /* Rosa un poco más intenso */
-            animation: float 5s linear infinite;
-            z-index: 0;
-            opacity: 0;
-        }
-        @keyframes float {
-            0% { transform: translateY(110vh) scale(0.5); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        /* Contenedor principal de la carta */
-        #card {
-            background: linear-gradient(135deg, #ffffff 0%, #fefefe 100%);
-            padding: 30px;
-            border-radius: 25px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            z-index: 10;
-            width: 90%;
-            max-width: 400px;
-            border: 1px solid rgba(255, 255, 255, 0.8);
+        /* Contenedor del sobre */
+        .envelope-wrapper {
             position: relative;
-            transform: scale(0.95); /* Pequeña escala para efecto de llegada */
-            animation: cardEntrance 0.8s ease-out forwards;
-        }
-        @keyframes cardEntrance {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* Estilo del botón */
-        .btn {
-            background-color: #ff6f8f; /* Rosa fuerte */
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            border-radius: 50px;
+            width: 320px;
+            height: 200px;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(255, 111, 143, 0.4);
-            transition: all 0.3s ease;
-            margin-top: 20px;
+            transition: transform 0.4s ease;
         }
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 111, 143, 0.5);
-        }
-
-        /* Mensaje inicial */
-        #start h1 { color: #d63384; font-size: 2rem; margin-bottom: 15px; }
-        #start .icon-envelope { font-size: 90px; margin-bottom: 10px; }
-
-        /* Mensaje secreto y rosa */
-        #secret-message {
-            display: none; /* Oculto al principio */
-            animation: fadeIn 1s ease-in-out forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        #secret-message h1 { color: #d63384; font-size: 2.2rem; margin-bottom: 15px; }
-        #secret-message p { color: #555; line-height: 1.6; font-size: 1.1rem; text-align: justify; }
         
-        /* Contenedor de la rosa */
-        .rose-container {
-            width: 150px; /* Tamaño de la rosa */
-            height: 150px;
-            margin: 25px auto;
-            position: relative;
-            overflow: hidden; /* Para que la rosa crezca desde el centro */
-            border-radius: 50%; /* Opcional, para suavizar los bordes */
+        .envelope-wrapper:hover {
+            transform: translateY(-5px);
         }
-        .rose {
+
+        .envelope {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0); /* Empieza pequeña y oculta */
             width: 100%;
             height: 100%;
-            opacity: 0;
-            animation: bloom 2s ease-out forwards; /* Animación de florecer */
-            background-image: url('https://i.imgur.com/R3z6F2R.png'); /* URL de la imagen de la rosa */
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
+            background: #d63384;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            z-index: 3;
         }
 
-        @keyframes bloom {
-            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; filter: blur(5px); }
-            50% { opacity: 1; filter: blur(0px); }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        /* La solapa que se abre */
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 110px solid #ff4d6d;
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 5;
         }
-        
+
+        /* Parte frontal del sobre (bolsillo) */
+        .pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid #e63946;
+            border-right: 160px solid #e63946;
+            border-bottom: 110px solid #c1121f;
+            border-top: 90px solid transparent;
+            z-index: 4;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        /* La Carta */
+        .letter {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            background: #fffafa;
+            border-radius: 8px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 2;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 180px;
+            overflow: hidden;
+        }
+
+        /* Animaciones al hacer clic */
+        .open .flap {
+            transform: rotateX(180deg);
+            z-index: 1; /* Pasa detrás de la carta */
+        }
+
+        .open .letter {
+            transform: translateY(-120px) scale(1.1);
+            height: 480px;
+            z-index: 6; /* Pasa al frente */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        /* Estilos del texto */
+        .title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #d63384;
+            margin-bottom: 15px;
+            opacity: 0;
+            transition: opacity 1s 0.8s; /* Aparece después de que sube la carta */
+        }
+
+        .open .title {
+            opacity: 1;
+        }
+
+        .text-content {
+            font-size: 1.1rem;
+            color: #444;
+            line-height: 1.6;
+            text-align: justify;
+            min-height: 150px;
+        }
+
+        /* Rosa Pro Animada */
+        .rose-container {
+            margin-top: 20px;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 1.5s ease-out;
+            filter: drop-shadow(0 0 10px rgba(255, 77, 109, 0.5));
+        }
+
+        .show-rose .rose-container {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .rose-img {
+            width: 100px;
+            height: auto;
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Texto de ayuda inicial */
+        .hint {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            bottom: -40px;
+            color: white;
+            font-weight: bold;
+            font-family: sans-serif;
+            letter-spacing: 1px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        /* Corazones flotantes */
+        .floating-heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.6);
+            pointer-events: none;
+            z-index: 0;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            from { transform: translateY(100vh) scale(0.5); opacity: 1; }
+            to { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
-    <div id="card">
-        <div id="start">
-            <div class="icon-envelope">💌</div>
-            <h1>¡Un Regalo Muy Especial!</h1>
-            <button class="btn" onclick="reveal()">Toca para Abrir</button>
-        </div>
-
-        <div id="secret-message">
-            <h1>Para mi Amor, mi Flor más Bella ❤️</h1>
-            <p>
-                En este día, quiero regalarte algo más que palabras. Eres esa rosa que florece en mi jardín, 
-                llenando mi vida de color, de perfume y de una belleza única.
-                <br><br>
-                Cada pétalo de esa rosa es un momento que hemos compartido, una risa, un abrazo, una mirada. 
-                Cada día, tu amor me ayuda a florecer y a ser una mejor versión de mí mismo/a.
-                <br><br>
-                <b>Gracias por ser mi inspiración. Te amo con todo mi corazón.</b>
-            </p>
-            <div class="rose-container">
-                <div class="rose" id="animated-rose"></div>
+    <div class="envelope-wrapper" id="envelope" onclick="openEnvelope()">
+        <div class="envelope"></div>
+        <div class="flap"></div>
+        <div class="pocket"></div>
+        
+        <div class="letter" id="letter">
+            <h1 class="title">Mi Amor...</h1>
+            <div class="text-content" id="typed-text"></div>
+            
+            <div class="rose-container" id="rose">
+                <img src="https://i.imgur.com/R3z6F2R.png" alt="Rosa" class="rose-img">
             </div>
-            <div style="font-size: 40px; margin-top: 20px;">💖✨</div>
         </div>
+        
+        <div class="hint" id="hint-text">Toca el sobre para abrir 💌</div>
     </div>
 
     <script>
-        // Función para cambiar de pantalla
-        function reveal() {
-            document.getElementById('start').style.display = 'none';
-            document.getElementById('secret-message').style.display = 'block';
+        const message = "Eres la casualidad más hermosa que me ha pasado. Cada día a tu lado es un regalo, y quería enviarte esta rosa para recordarte que mi amor por ti crece y florece a cada instante. Te amo con locura.";
+        let i = 0;
+        let isOpened = false;
+
+        function openEnvelope() {
+            if (isOpened) return; // Evita que se active dos veces
+            isOpened = true;
+
+            const envelope = document.getElementById('envelope');
+            const hint = document.getElementById('hint-text');
+            const rose = document.getElementById('rose');
             
-            // Añadir la clase para activar la animación de la rosa después de un pequeño retraso
+            // Abre el sobre
+            envelope.classList.add('open');
+            hint.style.display = 'none'; // Oculta el texto de ayuda
+
+            // Inicia la máquina de escribir después de que la carta suba (1 segundo)
+            setTimeout(typeWriter, 1000);
+            
+            // Muestra la rosa unos segundos después de que empiece a escribir
             setTimeout(() => {
-                document.getElementById('animated-rose').style.opacity = '1';
-                document.getElementById('animated-rose').style.transform = 'translate(-50%, -50%) scale(1)';
-            }, 100); // Pequeño retraso para que el display block sea efectivo
-            
-            // Efecto de explosión de corazones al abrir
-            for(let i=0; i<15; i++) {
-                setTimeout(createHeart, i * 100);
+                envelope.classList.add('show-rose');
+            }, 3500);
+
+            // Explosión de corazones de fondo
+            for(let j = 0; j < 20; j++) {
+                setTimeout(createHeart, j * 150);
             }
         }
 
-        // Función de corazones flotantes
+        // Efecto de escribir letra por letra
+        function typeWriter() {
+            if (i < message.length) {
+                document.getElementById("typed-text").innerHTML += message.charAt(i);
+                i++;
+                setTimeout(typeWriter, 40); // Velocidad de escritura (40ms)
+            }
+        }
+
+        // Crear corazones flotantes en el fondo
         function createHeart() {
             const heart = document.createElement('div');
-            heart.classList.add('heart');
+            heart.classList.add('floating-heart');
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            heart.style.animationDuration = (Math.random() * 3 + 4) + 's'; // Duración un poco más larga
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
+            setTimeout(() => heart.remove(), 6000);
         }
 
-        // Corazones constantes de fondo (con menos frecuencia para no saturar)
-        setInterval(createHeart, 600); 
+        // Crear corazones aleatorios constantemente
+        setInterval(createHeart, 500);
     </script>
 </body>
 </html>
