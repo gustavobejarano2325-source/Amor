@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para mi persona favorita ❤️</title>
+    <title>Un regalo para ti ❤️</title>
     <style>
         body {
             margin: 0;
@@ -11,123 +11,100 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #ffeef2;
-            font-family: 'Apple Chancery', cursive, serif;
+            background-color: #ffebf0;
+            font-family: sans-serif;
             overflow: hidden;
             text-align: center;
         }
 
-        /* Corazones de fondo */
+        /* Corazones flotantes */
         .heart {
             position: absolute;
             color: #ff4d6d;
-            font-size: 20px;
             animation: float 4s linear infinite;
-            opacity: 0;
             z-index: 0;
         }
-
         @keyframes float {
-            0% { transform: translateY(110vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(110vh); opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
         }
 
-        /* Sobre y Carta */
-        .envelope-wrapper {
-            cursor: pointer;
-            z-index: 10;
-            transition: transform 0.3s;
-        }
-
-        .envelope-wrapper:hover {
-            transform: scale(1.1);
-        }
-
-        .envelope {
-            font-size: 100px;
-            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
-        }
-
-        .letter {
-            display: none;
+        /* Caja de contenido */
+        #card {
             background: white;
             padding: 30px;
-            width: 80%;
-            max-width: 400px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            position: relative;
-            z-index: 20;
-            animation: fadeIn 1s ease-in;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 10;
+            width: 85%;
+            max-width: 350px;
         }
 
-        h1 { color: #d63384; font-size: 1.8rem; margin-bottom: 15px; }
-        
-        p { 
-            color: #444; 
-            line-height: 1.6; 
-            font-size: 1.1rem; 
-            text-align: justify;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .btn-cerrar {
-            margin-top: 20px;
-            background: #ff4d6d;
+        .btn {
+            background-color: #ff4d6d;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
+            padding: 15px 25px;
+            font-size: 18px;
+            border-radius: 50px;
             cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
         }
+
+        #secret-message {
+            display: none; /* Oculto al principio */
+        }
+
+        h1 { color: #d63384; margin-top: 0; }
+        p { color: #555; line-height: 1.5; font-size: 16px; }
     </style>
 </head>
 <body>
 
-    <div class="envelope-wrapper" id="envelope" onclick="openLetter()">
-        <div class="envelope">✉️</div>
-        <p style="color: #ff4d6d; font-weight: bold;">Toca para abrir tu sorpresa</p>
-    </div>
+    <div id="card">
+        <div id="start">
+            <div style="font-size: 80px;">✉️</div>
+            <h1>Tienes una carta</h1>
+            <button class="btn" onclick="reveal()">Toca para abrir</button>
+        </div>
 
-    <div class="letter" id="letter">
-        <h1>Mi Amor... ❤️</h1>
-        <p>
-            Quería escribirte algo especial porque personas como tú no se encuentran dos veces en la vida. 
-            Desde que llegaste, mis días tienen más color y mi corazón late con un propósito más bonito.
-            <br><br>
-            Gracias por cada risa, por cada palabra de apoyo y por ser mi refugio seguro. En este San Valentín, 
-            mi único deseo es seguir construyendo momentos increíbles a tu lado. Eres mi lugar favorito en el mundo.
-            <br><br>
-            <b>Te amo más de lo que las palabras pueden expresar.</b>
-        </p>
-        <button class="btn-cerrar" onclick="closeLetter()">Cerrar con amor</button>
+        <div id="secret-message">
+            <h1>Para mi Amor ❤️</h1>
+            <p>
+                Hoy quería recordarte lo mucho que significas para mí. No hay palabras suficientes para describir cómo iluminas mis días. 
+                <br><br>
+                Eres mi persona favorita, mi apoyo y mi alegría. Gracias por cada momento juntos. ¡Feliz San Valentín!
+            </p>
+            <div style="font-size: 40px;">💖✨</div>
+        </div>
     </div>
 
     <script>
-        function openLetter() {
-            document.getElementById('envelope').style.display = 'none';
-            document.getElementById('letter').style.display = 'block';
+        // Función para cambiar de pantalla
+        function reveal() {
+            document.getElementById('start').style.display = 'none';
+            document.getElementById('secret-message').style.display = 'block';
+            
+            // Efecto de explosión de corazones al abrir
+            for(let i=0; i<15; i++) {
+                setTimeout(createHeart, i * 100);
+            }
         }
 
-        function closeLetter() {
-            document.getElementById('envelope').style.display = 'block';
-            document.getElementById('letter').style.display = 'none';
-        }
-
+        // Función de corazones
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
             document.body.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 4000);
+            setTimeout(() => heart.remove(), 4000);
         }
-        setInterval(createHeart, 300);
+
+        // Corazones constantes
+        setInterval(createHeart, 400);
     </script>
 </body>
 </html>
